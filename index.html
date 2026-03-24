@@ -1,10 +1,630 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Kilian</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kilian Rehnert · AI Engineer</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%233d6b50'/%3E%3Ctext x='16' y='23' font-family='Georgia%2C serif' font-size='20' font-weight='500' fill='%23faf9f6' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #faf9f6;
+      --surface: #f2f0eb;
+      --border: #e2ddd6;
+      --text: #1c1a18;
+      --muted: #7a7469;
+      --accent: #3d6b50;
+      --font-serif: 'Lora', Georgia, serif;
+      --font-mono: 'DM Mono', 'Courier New', monospace;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-serif);
+      line-height: 1.7;
+      padding: 0 1.5rem;
+    }
+
+    .container { max-width: 660px; margin: 0 auto; }
+
+    /* ── Header ── */
+    header {
+      padding: 4.5rem 0 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .name {
+      font-size: 2rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+
+    .tagline {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      margin-bottom: 1.8rem;
+    }
+
+    .about {
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 540px;
+      color: #3a3530;
+    }
+
+    nav { display: flex; gap: 1.5rem; margin-top: 2rem; }
+
+    nav a {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.15s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    /* ── Lang toggle ── */
+    .lang-toggle {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.25rem 0.55rem;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      transition: color 0.15s, border-color 0.15s;
+      z-index: 10;
+    }
+
+    .lang-toggle:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── Sections ── */
+    section {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    /* ── Projects ── */
+    .project {
+      padding-bottom: 2.2rem;
+      margin-bottom: 2.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project:last-child {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+
+    .project-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.25rem;
+    }
+
+    .project-title { font-size: 1.05rem; font-weight: 500; color: var(--text); }
+
+    .project-period {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .project-context {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--accent);
+      margin-bottom: 0.7rem;
+    }
+
+    .project-desc { font-size: 0.94rem; color: #3d3830; line-height: 1.75; }
+
+    .project-result {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--accent);
+      background: #eef4f0;
+      border: 1px solid #c8ddd0;
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+    }
+
+    /* ── Offerings ── */
+    .offerings { display: flex; flex-direction: column; gap: 1.4rem; }
+
+    .offering {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 0.4rem 1.2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 520px) {
+      .offering { grid-template-columns: 1fr; gap: 0.25rem; }
+    }
+
+    .offering-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--muted);
+      padding-top: 0.15rem;
+    }
+
+    .offering-text { font-size: 0.92rem; color: #3d3830; line-height: 1.65; }
+
+    /* ── Tech stack ── */
+    .stack-groups { display: flex; flex-direction: column; gap: 1.4rem; }
+
+    .stack-group {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 0.4rem 1.2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 520px) {
+      .stack-group { grid-template-columns: 1fr; gap: 0.25rem; }
+    }
+
+    .stack-group-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--muted);
+      padding-top: 0.3rem;
+    }
+
+    .stack-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 300;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.2rem 0.55rem;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    /* ── Contact ── */
+    .contact-note {
+      font-size: 0.95rem;
+      color: #3d3830;
+      line-height: 1.75;
+      margin-bottom: 1.8rem;
+      max-width: 480px;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .contact-row { display: flex; align-items: center; gap: 1rem; }
+
+    .contact-type {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      width: 70px;
+      flex-shrink: 0;
+    }
+
+    .contact-row a {
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .contact-row a:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2rem 0 3rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ── Fade in ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header                { animation: fadeUp 0.45s ease both; }
+    section:nth-of-type(1){ animation: fadeUp 0.45s ease 0.10s both; }
+    section:nth-of-type(2){ animation: fadeUp 0.45s ease 0.20s both; }
+    section:nth-of-type(3){ animation: fadeUp 0.45s ease 0.30s both; }
+  </style>
 </head>
 <body>
-  <h1>Hi, ich bin Kilian 👋</h1>
-  <p>Willkommen auf meiner Website</p>
+
+  <button class="lang-toggle" id="langToggle" aria-label="Switch language"></button>
+
+  <div class="container">
+
+    <header>
+      <h1 class="name">Kilian Rehnert</h1>
+      <p class="tagline" data-i18n="tagline"></p>
+      <p class="about" data-i18n="about"></p>
+      <nav>
+        <a href="#projects" data-i18n="nav.projects"></a>
+        <a href="#offerings" data-i18n="nav.offerings"></a>
+        <a href="#stack" data-i18n="nav.stack"></a>
+        <a href="#contact" data-i18n="nav.contact"></a>
+      </nav>
+    </header>
+
+    <!-- ── PROJECTS ── -->
+    <section id="projects">
+      <p class="section-label" data-i18n="projects.label"></p>
+
+      <div class="project">
+        <div class="project-header">
+          <span class="project-title" data-i18n="p0.title"></span>
+          <span class="project-period" data-i18n="p0.period"></span>
+        </div>
+        <p class="project-context" data-i18n="p0.context"></p>
+        <p class="project-desc" data-i18n="p0.desc"></p>
+        <span class="project-result" data-i18n="p0.result"></span>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <span class="project-title" data-i18n="p1.title"></span>
+          <span class="project-period" data-i18n="p1.period"></span>
+        </div>
+        <p class="project-context" data-i18n="p1.context"></p>
+        <p class="project-desc" data-i18n="p1.desc"></p>
+        <span class="project-result" data-i18n="p1.result"></span>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <span class="project-title" data-i18n="p2.title"></span>
+          <span class="project-period" data-i18n="p2.period"></span>
+        </div>
+        <p class="project-context" data-i18n="p2.context"></p>
+        <p class="project-desc" data-i18n="p2.desc"></p>
+        <span class="project-result" data-i18n="p2.result"></span>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <span class="project-title" data-i18n="p3.title"></span>
+          <span class="project-period" data-i18n="p3.period"></span>
+        </div>
+        <p class="project-context" data-i18n="p3.context"></p>
+        <p class="project-desc" data-i18n="p3.desc"></p>
+        <span class="project-result" data-i18n="p3.result"></span>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <span class="project-title" data-i18n="p4.title"></span>
+          <span class="project-period" data-i18n="p4.period"></span>
+        </div>
+        <p class="project-context" data-i18n="p4.context"></p>
+        <p class="project-desc" data-i18n="p4.desc"></p>
+        <span class="project-result" data-i18n="p4.result"></span>
+      </div>
+
+    </section>
+
+    <!-- ── OFFERINGS ── -->
+    <section id="offerings">
+      <p class="section-label" data-i18n="offerings.label"></p>
+      <div class="offerings">
+
+        <div class="offering">
+          <span class="offering-label" data-i18n="o1.label"></span>
+          <p class="offering-text" data-i18n="o1.text"></p>
+        </div>
+
+        <div class="offering">
+          <span class="offering-label" data-i18n="o2.label"></span>
+          <p class="offering-text" data-i18n="o2.text"></p>
+        </div>
+
+        <div class="offering">
+          <span class="offering-label" data-i18n="o3.label"></span>
+          <p class="offering-text" data-i18n="o3.text"></p>
+        </div>
+
+        <div class="offering">
+          <span class="offering-label" data-i18n="o4.label"></span>
+          <p class="offering-text" data-i18n="o4.text"></p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── TECH STACK ── -->
+    <section id="stack">
+      <p class="section-label" data-i18n="stack.label"></p>
+      <div class="stack-groups">
+
+        <div class="stack-group">
+          <span class="stack-group-label" data-i18n="stack.lang"></span>
+          <div class="stack-tags">
+            <span class="tag">Python</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Node.js</span>
+          </div>
+        </div>
+
+        <div class="stack-group">
+          <span class="stack-group-label" data-i18n="stack.frameworks"></span>
+          <div class="stack-tags">
+            <span class="tag">React</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">LangChain</span>
+            <span class="tag">LlamaIndex</span>
+            <span class="tag">LangGraph</span>
+            <span class="tag">Prisma</span>
+          </div>
+        </div>
+
+        <div class="stack-group">
+          <span class="stack-group-label" data-i18n="stack.ai"></span>
+          <div class="stack-tags">
+            <span class="tag">OpenAI API</span>
+            <span class="tag">Azure AI Foundry</span>
+            <span class="tag">Azure AI Search</span>
+            <span class="tag">IONOS AI Hub</span>
+            <span class="tag">RAG</span>
+            <span class="tag">Vector databases</span>
+            <span class="tag">Langfuse</span>
+          </div>
+        </div>
+
+        <div class="stack-group">
+          <span class="stack-group-label" data-i18n="stack.infra"></span>
+          <div class="stack-tags">
+            <span class="tag">Azure App Service</span>
+            <span class="tag">Azure Container Apps</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Terraform</span>
+            <span class="tag">Git / GitHub</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact">
+      <p class="section-label" data-i18n="contact.label"></p>
+      <p class="contact-note" data-i18n="contact.note"></p>
+      <div class="contact-links">
+        <div class="contact-row">
+          <span class="contact-type" data-i18n="contact.emailLabel"></span>
+          <a href="mailto:kilian.rehnert@icloud.com">kilian.rehnert@icloud.com</a>
+        </div>
+        <div class="contact-row">
+          <span class="contact-type">LinkedIn</span>
+          <a href="https://linkedin.com/in/kilian-rehnert-261831198/" target="_blank" rel="noopener">linkedin.com/in/kilian-rehnert-261831198</a>
+        </div>
+      </div>
+    </section>
+
+    <footer data-i18n="footer"></footer>
+
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        tagline:           'AI Engineer \u00b7 Munich, Germany',
+        about:             'I help companies put AI to work. That means understanding what your team actually needs, finding the right place for AI to make a difference, and then building and delivering the solution\u2009\u2014\u2009end to end. I stay involved from the first conversation through to the finished product.',
+        'nav.projects':   'Projects',
+        'nav.offerings':  'What I do',
+        'nav.stack':      'Stack',
+        'nav.contact':    'Contact',
+
+        'projects.label': 'Selected Projects',
+
+        'p0.title':   'Automated Compliance Checks on Incoming Emails',
+        'p0.period':  '2026',
+        'p0.context': 'Compliance \u00b7 Self-Employed',
+        'p0.desc':    'A company was manually reviewing around 40 incoming emails per day, checking whether reported values stayed within defined limits \u2014 a tedious, error-prone process. I built an application that automatically extracts the relevant figures from each email and compares them against the corresponding thresholds. The responsible person is only notified when a limit is breached. In all other cases, the email is handled without any manual involvement.',
+        'p0.result':  '\u2713\u200290\u202f% of emails now processed without manual review',
+
+        'p1.title':   'AI Assistant for Document-Heavy Audits',
+        'p1.period':  '2025 \u2013 ongoing',
+        'p1.context': 'Quality Management \u00b7 Self-Employed',
+        'p1.desc':    'A quality management consultant works with 80+ clients in healthcare and the food industry. Preparing for audits meant spending hours manually searching through large stacks of internal documents. I built an AI assistant that lets the consultant \u2014 and their clients \u2014 ask questions in plain language and get precise answers, with direct references to the source document.',
+        'p1.result':  '\u2713\u2002~80\u202f% reduction in research time per audit',
+
+        'p2.title':   'Smarter Matching at Career Fairs',
+        'p2.period':  '2024 \u2013 2025',
+        'p2.context': 'HR \u00b7 Self-Employed',
+        'p2.desc':    'Career fairs often leave both sides frustrated: candidates don\u2019t know which companies to approach, and employers spend time in conversations that go nowhere. I built a platform that guides job seekers through a short conversation about their interests and background, then gives them personalised recommendations for companies and roles that actually fit.',
+        'p2.result':  '\u2713\u20027,000+ users across multiple career events',
+
+        'p3.title':   'Internal Knowledge Tool for a Legal Team',
+        'p3.period':  '2024 \u2013 2025',
+        'p3.context': 'Legal \u00b7 TRATON Group (Volkswagen)',
+        'p3.desc':    'A legal department of around 30 people was regularly losing time searching for answers buried in internal policies, contracts and guidelines. I built a search tool that lets team members ask questions in everyday language and get precise answers from the right documents \u2014 without relying on a colleague who happens to know where to look. I also ran workshops to help different teams get started with AI tools.',
+        'p3.result':  '\u2713\u2002Teams can self-serve answers to complex policy questions',
+
+        'p4.title':   'Early-Warning System for Technology Trends',
+        'p4.period':  '2021 \u2013 2023',
+        'p4.context': 'Corporate Strategy \u00b7 Siemens AG',
+        'p4.desc':    'Spotting the next important technology trend used to mean manually reading through reports, news articles and industry forums \u2014 a slow and incomplete process. I built an automated system that continuously monitored thousands of sources and flagged emerging trends early, giving the strategy and procurement teams a clear, data-backed picture of what was on the horizon.',
+        'p4.result':  '\u2713\u2002Faster, more informed decisions on technology strategy',
+
+        'offerings.label': 'What I do',
+        'o1.label': 'Document & knowledge tools',
+        'o1.text':  'If your team spends time searching through documents, manuals, contracts or policies, I can build a tool that answers questions directly \u2014 accurately and with source references.',
+        'o2.label': 'Workflow automation',
+        'o2.text':  'Repetitive tasks that require reading, sorting or summarising information are often a good fit for AI. I identify where the time is being lost and build something that runs in the background.',
+        'o3.label': 'AI adoption & workshops',
+        'o3.text':  'Rolling out new tools only works if people actually use them. I run practical workshops to help teams understand what AI can do for their specific work \u2014 and how to make the most of it.',
+        'o4.label': 'Industries',
+        'o4.text':  'Healthcare, food & agriculture, automotive, HR, legal, corporate strategy. I work in German and English.',
+
+        'stack.label':      'Tech Stack',
+        'stack.lang':       'Languages',
+        'stack.frameworks': 'Frameworks',
+        'stack.ai':         'AI & Cloud',
+        'stack.infra':      'Infrastructure',
+
+        'contact.label':      'Contact',
+        'contact.note':       'If you have a process that\u2019s taking up too much time, or you\u2019re curious whether AI could help your team, feel free to reach out. I\u2019m happy to have an initial conversation with no strings attached.',
+        'contact.emailLabel': 'Email',
+
+        footer: '\u00a9 2025 Kilian Rehnert \u00b7 Munich, Germany',
+        toggleLabel: 'DE',
+      },
+
+      de: {
+        tagline:           'KI-Ingenieur \u00b7 M\u00fcnchen',
+        about:             'Ich helfe Unternehmen dabei, KI sinnvoll einzusetzen. Das bedeutet: verstehen, was Ihr Team wirklich braucht, die richtigen Stellen finden, an denen KI einen Unterschied macht \u2009\u2014\u2009und dann die L\u00f6sung entwickeln und liefern. Ich bin von Anfang bis Ende dabei \u2014 vom ersten Gespr\u00e4ch bis zum fertigen Produkt.',
+        'nav.projects':   'Projekte',
+        'nav.offerings':  'Was ich mache',
+        'nav.stack':      'Stack',
+        'nav.contact':    'Kontakt',
+
+        'projects.label': 'Ausgew\u00e4hlte Projekte',
+
+        'p0.title':   'Automatisierte Pr\u00fcfung eingehender Meldungen',
+        'p0.period':  '2026',
+        'p0.context': 'Compliance \u00b7 Selbst\u00e4ndig',
+        'p0.desc':    'Ein Unternehmen pr\u00fcfte t\u00e4glich rund 40 eingehende E-Mails manuell darauf, ob gemeldete Werte innerhalb definierter Grenzwerte lagen \u2014 ein aufw\u00e4ndiger und fehleranf\u00e4lliger Prozess. Ich habe eine Anwendung entwickelt, die die relevanten Angaben automatisch aus jeder E-Mail extrahiert und mit den zugeh\u00f6rigen Grenzwerten abgleicht. Der Verantwortliche wird nur benachrichtigt, wenn ein Grenzwert nicht eingehalten wird. In allen anderen F\u00e4llen l\u00e4uft die Pr\u00fcfung vollst\u00e4ndig automatisch ab.',
+        'p0.result':  '\u2713\u200290\u202f% der E-Mails werden ohne manuellen Aufwand verarbeitet',
+
+        'p1.title':   'KI-Assistent f\u00fcr dokumentenintensive Audits',
+        'p1.period':  '2025 \u2013 heute',
+        'p1.context': 'Qualit\u00e4tsmanagement \u00b7 Selbst\u00e4ndig',
+        'p1.desc':    'Ein Qualit\u00e4tsmanagement-Berater betreut \u00fcber 80 Kunden aus dem Gesundheits- und Lebensmittelbereich. Die Vorbereitung auf Audits bedeutete stundenlange manuelle Suche in gro\u00dfen internen Dokumentenmengen. Ich habe einen KI-Assistenten entwickelt, mit dem der Berater \u2014 und seine Kunden \u2014 Fragen in normaler Sprache stellen und pr\u00e4zise Antworten mit direktem Quellverweis erhalten.',
+        'p1.result':  '\u2713\u2002~80\u202f% weniger Rechercheaufwand pro Audit',
+
+        'p2.title':   'Besseres Matching auf Karrieremessen',
+        'p2.period':  '2024 \u2013 2025',
+        'p2.context': 'HR \u00b7 Selbst\u00e4ndig',
+        'p2.desc':    'Karrieremessen frustrieren oft beide Seiten: Bewerber wissen nicht, welche Unternehmen zu ihnen passen, und Arbeitgeber verbringen Zeit in Gespr\u00e4chen, die ins Leere laufen. Ich habe eine Plattform entwickelt, die Jobsuchende durch ein kurzes Gespr\u00e4ch zu ihren Interessen und ihrem Hintergrund f\u00fchrt und ihnen dann pers\u00f6nliche Empfehlungen f\u00fcr passende Unternehmen und Stellen gibt.',
+        'p2.result':  '\u2713\u2002\u00dcber 7.000 Nutzer auf mehreren Karrieremessen',
+
+        'p3.title':   'Internes Wissenstool f\u00fcr ein Legal-Team',
+        'p3.period':  '2024 \u2013 2025',
+        'p3.context': 'Legal \u00b7 TRATON Group (Volkswagen)',
+        'p3.desc':    'Eine Rechtsabteilung mit rund 30 Mitarbeitenden verlor regelm\u00e4\u00dfig Zeit damit, Antworten in internen Richtlinien, Vertr\u00e4gen und Leitf\u00e4den zu suchen. Ich habe ein Suchtool entwickelt, mit dem Teammitglieder Fragen in normaler Sprache stellen und pr\u00e4zise Antworten aus den richtigen Dokumenten erhalten \u2014 ohne auf einen Kollegen angewiesen zu sein, der zuf\u00e4llig wei\u00df, wo man nachschauen muss. Au\u00dferdem habe ich Workshops durchgef\u00fchrt, um verschiedenen Teams den Einstieg in KI-Tools zu erleichtern.',
+        'p3.result':  '\u2713\u2002Teams k\u00f6nnen komplexe Richtlinienfragen selbst beantworten',
+
+        'p4.title':   'Fr\u00fchwarnsystem f\u00fcr Technologietrends',
+        'p4.period':  '2021 \u2013 2023',
+        'p4.context': 'Unternehmensstrategie \u00b7 Siemens AG',
+        'p4.desc':    'Den n\u00e4chsten wichtigen Technologietrend zu erkennen bedeutete fr\u00fcher: manuell Berichte, Nachrichtenartikel und Branchenforen durchlesen \u2014 ein langsamer und l\u00fcckenhafter Prozess. Ich habe ein automatisiertes System entwickelt, das kontinuierlich Tausende von Quellen \u00fcberwacht und aufkommende Trends fr\u00fchzeitig signalisiert \u2014 mit einem klaren, datengest\u00fctzten \u00dcberblick f\u00fcr Strategie- und Einkaufsteams.',
+        'p4.result':  '\u2713\u2002Schnellere, fundiertere Entscheidungen zur Technologiestrategie',
+
+        'offerings.label': 'Was ich mache',
+        'o1.label': 'Dokument- & Wissenstools',
+        'o1.text':  'Wenn Ihr Team Zeit damit verbringt, in Dokumenten, Handb\u00fcchern, Vertr\u00e4gen oder Richtlinien zu suchen, kann ich ein Tool entwickeln, das Fragen direkt beantwortet \u2014 pr\u00e4zise und mit Quellenangabe.',
+        'o2.label': 'Prozessautomatisierung',
+        'o2.text':  'Wiederkehrende Aufgaben, bei denen Informationen gelesen, sortiert oder zusammengefasst werden m\u00fcssen, sind oft gut geeignet f\u00fcr KI. Ich identifiziere, wo Zeit verloren geht, und entwickle etwas, das im Hintergrund l\u00e4uft.',
+        'o3.label': 'KI-Einf\u00fchrung & Workshops',
+        'o3.text':  'Neue Tools funktionieren nur, wenn sie auch wirklich genutzt werden. Ich f\u00fchre praxisorientierte Workshops durch, damit Teams verstehen, was KI f\u00fcr ihre konkrete Arbeit leisten kann \u2014 und wie sie das Beste daraus machen.',
+        'o4.label': 'Branchen',
+        'o4.text':  'Gesundheitswesen, Lebensmittel & Landwirtschaft, Automobil, HR, Legal, Unternehmensstrategie. Ich arbeite auf Deutsch und Englisch.',
+
+        'stack.label':      'Tech Stack',
+        'stack.lang':       'Sprachen',
+        'stack.frameworks': 'Frameworks',
+        'stack.ai':         'KI & Cloud',
+        'stack.infra':      'Infrastruktur',
+
+        'contact.label':      'Kontakt',
+        'contact.note':       'Wenn Sie einen Prozess haben, der zu viel Zeit kostet, oder neugierig sind, ob KI Ihrem Team helfen k\u00f6nnte \u2014 melden Sie sich gerne. Ein erstes Gespr\u00e4ch ist unverbindlich.',
+        'contact.emailLabel': 'E-Mail',
+
+        footer: '\u00a9 2025 Kilian Rehnert \u00b7 M\u00fcnchen',
+        toggleLabel: 'EN',
+      }
+    };
+
+    function detectLang() {
+      const saved = localStorage.getItem('lang');
+      if (saved && translations[saved]) return saved;
+      const browser = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+      return browser.startsWith('de') ? 'de' : 'en';
+    }
+
+    function applyLang(lang) {
+      const t = translations[lang];
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+      const toggle = document.getElementById('langToggle');
+      toggle.textContent = t.toggleLabel;
+      toggle.setAttribute('aria-label', lang === 'de' ? 'Switch to English' : 'Auf Deutsch wechseln');
+      localStorage.setItem('lang', lang);
+    }
+
+    let currentLang = detectLang();
+    applyLang(currentLang);
+
+    document.getElementById('langToggle').addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'de' : 'en';
+      applyLang(currentLang);
+    });
+  </script>
+
 </body>
 </html>
