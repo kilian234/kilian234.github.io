@@ -5,9 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kilian Rehnert · AI Engineer</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%233d6b50'/%3E%3Ctext x='16' y='23' font-family='Georgia%2C serif' font-size='20' font-weight='500' fill='%23faf9f6' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'DM Mono';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url('fonts/dm-mono-300.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'DM Mono';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/dm-mono-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Lora';
+      font-style: normal;
+      font-weight: 400 500;
+      font-display: swap;
+      src: url('fonts/lora-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Lora';
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/lora-400-italic.woff2') format('woff2');
+    }
+  </style>
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -277,6 +304,15 @@
       font-weight: 300;
     }
 
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    footer a:hover { color: var(--accent); border-color: var(--accent); }
+
     /* ── Fade in ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(8px); }
@@ -462,7 +498,11 @@
       </div>
     </section>
 
-    <footer data-i18n="footer"></footer>
+    <footer>
+      <span data-i18n="footer"></span>
+      &ensp;&middot;&ensp;<a href="impressum.html" data-i18n="footer.impressum"></a>
+      &ensp;&middot;&ensp;<a href="datenschutz.html" data-i18n="footer.datenschutz"></a>
+    </footer>
 
   </div>
 
@@ -529,6 +569,8 @@
         'contact.emailLabel': 'Email',
 
         footer: '\u00a9 2025 Kilian Rehnert \u00b7 Munich, Germany',
+        'footer.impressum': 'Impressum',
+        'footer.datenschutz': 'Privacy Policy',
         toggleLabel: 'DE',
       },
 
@@ -593,6 +635,8 @@
         'contact.emailLabel': 'E-Mail',
 
         footer: '\u00a9 2025 Kilian Rehnert \u00b7 M\u00fcnchen',
+        'footer.impressum': 'Impressum',
+        'footer.datenschutz': 'Datenschutz',
         toggleLabel: 'EN',
       }
     };
