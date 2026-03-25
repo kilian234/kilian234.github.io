@@ -677,7 +677,6 @@
       const toggle = document.getElementById('langToggle');
       toggle.textContent = t.toggleLabel;
       toggle.setAttribute('aria-label', lang === 'de' ? 'Switch to English' : 'Auf Deutsch wechseln');
-      localStorage.setItem('lang', lang);
     }
 
     let currentLang = detectLang();
@@ -686,6 +685,8 @@
     document.getElementById('langToggle').addEventListener('click', () => {
       currentLang = currentLang === 'en' ? 'de' : 'en';
       applyLang(currentLang);
+      // Persist only after an explicit user action (language toggle).
+      localStorage.setItem('lang', currentLang);
     });
   </script>
 
