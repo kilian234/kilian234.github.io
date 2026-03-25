@@ -95,6 +95,17 @@
       color: #3a3530;
     }
 
+    .profile-photo {
+      width: 126px;
+      height: 126px;
+      object-fit: cover;
+      object-position: center 34%;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      margin-bottom: 1.3rem;
+      display: block;
+    }
+
     nav { display: flex; gap: 1.5rem; margin-top: 2rem; }
 
     nav a {
@@ -240,6 +251,13 @@
       .stack-group { grid-template-columns: 1fr; gap: 0.25rem; }
     }
 
+    @media (max-width: 520px) {
+      .profile-photo {
+        width: 108px;
+        height: 108px;
+      }
+    }
+
     .stack-group-label {
       font-family: var(--font-mono);
       font-size: 0.72rem;
@@ -332,6 +350,7 @@
   <div class="container">
 
     <header>
+      <img class="profile-photo" src="321A1AA0-8EB4-4D6C-B100-E59AFE452F03_4_5005_c.jpeg" alt="Portrait of Kilian Rehnert" />
       <h1 class="name">Kilian Rehnert</h1>
       <p class="tagline" data-i18n="tagline"></p>
       <p class="about" data-i18n="about"></p>
